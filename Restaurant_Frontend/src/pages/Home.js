@@ -7,13 +7,17 @@ import { Outlet } from 'react-router-dom';
 
 const Home = () => {
     const userData = useSelector(state => state.userReducer);
+
+    console.log("Home",userData.isLoggedIn);
     const dispatch = useDispatch();
     const [isRestaurantsFetched, setIsRestaurantsFetched] = useState(false);
     useEffect(() => {
         async function getRestaurantDetails() {
 
             try {
-                let { data } = await axios.get('/restaurant/all');
+                let { data } = await axios.get('http://localhost:4001/restaurant/all');
+
+                console.log(data.restaurants);
                 dispatch({ type: "SET_RESTAURANTS", payload: data.restaurants });
                 setIsRestaurantsFetched(true);
             } catch (error) {

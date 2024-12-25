@@ -67,21 +67,10 @@ const userSchema = new Schema({
     timestamps: true
 });
 
-userSchema.pre('save', function (next) {
-    // If password hasn't changed or the document is new, skip hashing
-    if (!this.isModified("password") && !this.isNew) return next();
-
-    // Hash password if it has changed
-    const user = this;
-    bcrypt.hash(user.password, 10, (err, hash) => {
-        if (err) {
-            return next(err);  // If there is an error during hashing, pass the error to next()
-        }
-        user.password = hash;  // Set the hashed password on the user document
-        next();  // Proceed to the next middleware or save operation
-    });
-});
-
+userSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+    return token;
+}
 
 userSchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
@@ -89,12 +78,6 @@ userSchema.methods.comparePassword = async function (password) {
 
 userSchema.statics.hashPassword = async function (password) {
     return await bcrypt.hash(password, 10);
-}
-
-
-userSchema.methods.generateAuthToken= function(){
-    const token= jwt.sign({_id:this.id},process.env.JWT_SECRET);
-    return token;
 }
 
 const User = mongoose.model("User", userSchema);

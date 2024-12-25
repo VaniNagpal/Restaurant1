@@ -8,10 +8,12 @@ const RestaurantPage = () => {
     const { restaurant_id } = useParams();
     const [isRestaurantFetched, setIsRestaurantFetched] = useState(false);
     const [restaurant, setRestaurant] = useState([]);
+
+    
     useEffect(() => {
         try {
             const getRestaurant = async () => {
-                const { data } = await axios.get(`/restaurant/${restaurant_id}`);
+                const { data } = await axios.get(`http://localhost:4001/restaurant/${restaurant_id}`);
                 setRestaurant(data.restaurant[0]);
                 console.log(data.restaurant[0])
                 setIsRestaurantFetched(true);

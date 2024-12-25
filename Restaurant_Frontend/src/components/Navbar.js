@@ -12,6 +12,8 @@ const getCookie = (name) => {
   return null;
 };
 
+console.log(getCookie('token'));
+
 const Navbar = () => {
     const UserData = useSelector(state => state.userReducer);
        
@@ -21,7 +23,7 @@ const Navbar = () => {
 
 
     const checkLoginStatus = async () => {
-      const token = getCookie('AccessToken');
+      const token = getCookie('token');
       if (token) {
         try {
         

@@ -11,6 +11,12 @@ const initialState = {
 };
 
 function userReducer(state = { initialState }, action) {
+
+
+    console.log('Action:', action);
+    console.log('State before:', state);
+
+    
     switch (action.type) {
         case 'SET_USER':
             return {
