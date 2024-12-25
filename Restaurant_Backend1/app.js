@@ -44,4 +44,26 @@ app.get('/',(req,res)=>{
     res.send('Hello World')
 })
 
+
+app.post('/create-checkout-session', async (req, res) => {
+    try {
+        const { line_items } = req.body;
+
+        console.log(line_items);
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items,
+            mode: 'payment',
+            success_url: `${process.env.CLIENT_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`, // Replace with your client success URL
+            cancel_url: `${process.env.CLIENT_DOMAIN}/cancel`, // Replace with your client cancel URL
+        });
+
+        res.status(200).json({ sessionId: session.id });
+    } catch (error) {
+        console.error('Error creating checkout session:', error);
+        res.status(500).json({ error: 'Failed to create checkout session' });
+    }
+});
+
 module.exports=app;

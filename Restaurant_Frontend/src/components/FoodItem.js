@@ -8,11 +8,11 @@ const FoodItem = ({ food, category, restaurantName }) => {
     const dispatch = useDispatch();
     const addToCartHandler = async (id, category, restaurantName) => {
         try {
-            const { data } = await axios.get(`/restaurant/add-cart/${id}?category=${category}&restaurant_name=${restaurantName}`)
+            const { data } = await axios.get(`http://localhost:4001/restaurant/add-cart/${id}?category=${category}&restaurant_name=${restaurantName}`)
             console.log(data);
             dispatch({ type: 'ADD_TO_CART', payload: data })
-            swal ( "Item added to cart" );
-         
+            swal("Item added to cart");
+
         } catch (error) {
             alert(error);
         }
@@ -32,9 +32,9 @@ const FoodItem = ({ food, category, restaurantName }) => {
                 <p className="text-gray-500 mb-2">{food.description}</p>
                 <div className="flex justify-between items-center">
 
-  <span className="text-xl font-bold mb-4">{food.veg ? "Veg" : "Non-Veg"}</span>
-  <span className="text-xl font-bold mb-4">${food.price}</span>
-</div>
+                    <span className="text-xl font-bold mb-4">{food.veg ? "Veg" : "Non-Veg"}</span>
+                    <span className="text-xl font-bold mb-4">${food.price}</span>
+                </div>
 
                 {/* <p className="text-xl font-bold mb-4">{food.veg?"veg":"Non-veg"}</p> */}
                 <button

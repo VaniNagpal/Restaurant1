@@ -140,10 +140,6 @@ exports.postCusineCategoryAdd = ErrorWrapper(async (req, res, next) => {
 
 
 
-
-
-
-
 exports.postAddFoodItem = ErrorWrapper(async (req, res, next) => {
     const requiredFields = ["category", "name", "price", "veg", "restaurant_name", "description"];
     const incomingFields = Object.keys(req.body);
@@ -208,8 +204,6 @@ exports.postAddFoodItem = ErrorWrapper(async (req, res, next) => {
         throw new ErrorHandler(error.statusCode || 500, error.message);
     }
 })
-
-
 
 
 
